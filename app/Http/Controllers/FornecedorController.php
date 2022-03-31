@@ -11,8 +11,16 @@ class FornecedorController extends Controller
         return view('app.fornecedores.index');
     }
 
-    public function listar() {
-        return view('app.fornecedores.listar');
+    public function listar(Request $request) {
+        
+        $fornecedores = Fornecedor::where('nome', 'like', '%'.$request->input('nome').'%')
+        ->where('site', 'like', '%'.$request->input('site').'%')
+        ->where('uf', 'like', '%'.$request->input('uf').'%')
+        ->where('email', 'like', '%'.$request->input('email').'%')
+        ->get();
+
+        
+        return view('app.fornecedores.listar', ['fornecedores' => $fornecedores]);
     }
 
     public function adicionar(Request $request) {
@@ -44,6 +52,27 @@ class FornecedorController extends Controller
 
              $msg = 'Cadastro realizado com sucesso !';
         }
+        //edição
+        if($request->input('_token') != '' && $request->input('id') != '') {
+           $fornecedor = Fornecedor::find($request->input('id'));
+           $update = $fornecedor->update($request->all());
+
+           if($update) {
+               $msg = 'Atualização realizada com sucesso';
+           } else {
+               $msg = 'Atualização não realizada';
+           }
+
+           return redirect()->route('app.fornecedor.editar', ['id' => $request->input('id'), 'msg' => $msg]);
+        }
+
         return view('app.fornecedores.adicionar', ['msg' => $msg]);
+    }
+
+    public function editar($id, $msg = ''){
+          echo $id;
+          $fornecedor = Fornecedor::find($id);
+
+          return view('app.fornecedores.adicionar', ['fornecedor'=> $fornecedor, 'msg' => $msg]);
     }
 }
