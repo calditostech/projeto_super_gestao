@@ -78,8 +78,12 @@ class FornecedorController extends Controller
     public function excluir($id, $msg = ''){
         $fornecedor = Fornecedor::find($id)->delete();
 
+        if(isset($fornecedor)){
+            $msg = 'Registro excluido com sucesso';
+        } else {
+            $msg = 'Falha ao excluir';
+        }
         return redirect()->route('app.fornecedor', ['fornecedor'=> $fornecedor, 'msg' => $msg]);
 
-        $msg = 'Registro excluido com sucesso';
     }
 }
