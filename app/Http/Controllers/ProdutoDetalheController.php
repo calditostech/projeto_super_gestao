@@ -56,7 +56,7 @@ class ProdutoDetalheController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Integer $id
+     * @param  Interteger $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -70,7 +70,7 @@ class ProdutoDetalheController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  App\ProdutoDetalhe $produtoDetalhe
+     * @param  App\ProdutoDetalhe $produtoDetalhe
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ProdutoDetalhe $produtoDetalhe)
